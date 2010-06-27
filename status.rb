@@ -6,6 +6,9 @@ Session.pre_send_message_timeline_status do |sender, e|
   user_protected = ""
   location = e.status.user.location
   
+  #時刻情報
+  created_time = stat.created_at.strftime("%H:%M:%S").to_s
+  
   #location情報の整形。
   if location != ""
     location = " (from #{location})"
@@ -22,6 +25,6 @@ Session.pre_send_message_timeline_status do |sender, e|
 #  end
   
   #変数代入して終わり。
-  e.text  =  "#{user_protected}#{e.text}#{location}#{client_source_disp}"
+  e.text  =  "#{created_time} #{user_protected}#{e.text}#{location}#{client_source_disp}"
 
 end
