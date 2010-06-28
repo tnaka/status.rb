@@ -7,7 +7,8 @@ Session.pre_send_message_timeline_status do |sender, e|
   location = e.status.user.location
   
   #時刻情報
-  created_time = stat.created_at.strftime("%H:%M:%S").to_s
+  #e.status.created_at.to_sは"2010/06/29 0:00:00"形式 strftimeで扱えなかった
+  created_time = e.status.created_at.to_s.split(" ")[1]
   
   #location情報の整形。
   if location != ""
@@ -25,6 +26,6 @@ Session.pre_send_message_timeline_status do |sender, e|
 #  end
   
   #変数代入して終わり。
-  e.text  =  "#{created_time} #{user_protected}#{e.text}#{location}#{client_source_disp}"
+  e.text  =  "#{created_time} #{user_protected}#{e.text}\x0314#{location}#{client_source_disp}"
 
 end
